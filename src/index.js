@@ -8,7 +8,7 @@ import App from './components/App.jsx';
 import SignIn from './components/SignIn.jsx';
 import SignUp from './components/SignUp.jsx';
 
-firebase.auth().onAuthStateChange(user => {
+firebaseApp.auth().onAuthStateChanged(user => {
   if (user) {
     console.log('user has signed in or up', user);
   } else {
