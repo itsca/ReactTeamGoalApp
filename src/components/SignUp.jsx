@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {firebaseApp} from '../firebase';
 
 export default class SignUp extends React.Component {
@@ -48,6 +49,7 @@ export default class SignUp extends React.Component {
           </button>
         </div>
         <div>{this.state.error.message}</div>
+        <div className=""><Link to={'/signin'}>Already a user?, sign in instead!</Link></div>
       </div>
     );
   }
