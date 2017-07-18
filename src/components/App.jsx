@@ -15,7 +15,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{margin: '10%'}}>
         <div className="">
           <h3>Team Goals</h3>
           <AddGoal />
