@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { firebaseApp } from '../firebase.js';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -21,3 +22,10 @@ export default class App extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  console.log('state', state);
+  return {}
+}
+
+export default connect(mapStateToProps, null)(App);
