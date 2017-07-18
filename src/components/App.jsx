@@ -30,7 +30,7 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state', state);
+  // console.log('state', state);
   return {}
 }
 
