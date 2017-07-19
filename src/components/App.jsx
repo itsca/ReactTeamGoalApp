@@ -19,7 +19,10 @@ class App extends React.Component {
         <div className="">
           <h3>Team Goals</h3>
           <AddGoal />
+          <hr />
+          <h4>Goals:</h4>
           <GoalList />
+          <hr />
         </div>
         <br/>
         <button className="btn btn-danger"
