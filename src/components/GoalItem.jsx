@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {completeGoalRef} from '../firebase.js';
+import {completeGoalRef, goalRef} from '../firebase.js';
 
 class GoalItem extends React.Component {
   // constructor(props) {
@@ -8,8 +8,8 @@ class GoalItem extends React.Component {
   // }
   completeGoal() {
     const {email} = this.props.user;
-    const {title} = this.props.goal;
-    console.log('email',email,'title', title);
+    const {title, serverKey} = this.props.goal;
+    goalRef.child(serverKey).remove();
     completeGoalRef.push({email, title});
   }
 
