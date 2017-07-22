@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { completeGoalRef } from '../firebase.js';
+import { setCompleted } from '../actions/index.js';
 
-export default class CompleteGoalList extends React.Component {
+class CompleteGoalList extends React.Component {
   // constructor(props) {
   //   super(props);
   // }
@@ -13,13 +15,45 @@ export default class CompleteGoalList extends React.Component {
         const { email, title } = completeGoal.val();
         completeGoals.push({email, title})
       })
-      console.log('completeGoals', completeGoals);
+      this.props.setCompleted(completeGoals);
    })
+  }
+
+  clearCompleted() {
+    completeGoalRef.set([]);
   }
 
   render() {
     return (
-      <div>Complete Goal List</div>
+      <div>
+          {
+          this.props.completeGoals.map((completeGoal, index) => {
+            const { title, email } = completeGoal;
+            return (
+              <div key={index}>
+                <strong>{title}
+                 completed by <em> {email} </em>
+                </strong>
+              </div>
+            )
+          })
+        }
+        <button className="btn btn-primary"
+          onClick={() => this.clearCompleted()}>
+          Clear All
+        </button>
+    </div>
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  const {completeGoals} = state;
+  // console.log('state', state);
+  return {
+    completeGoals
+  }
+}
+
+export default connect(mapStateToProps, {setCompleted})(CompleteGoalList);
