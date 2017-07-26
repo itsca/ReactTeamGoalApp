@@ -1,9 +1,10 @@
 import { SIGNED_IN, SET_GOALS, SET_COMPLETED } from '../constants/constants.js';
 
-export function logUser(email, uid) {
+export function logUser(email, userName, uid) {
   const action = {
     type: SIGNED_IN,
     email,
+    userName,
     uid
   }
   return action;

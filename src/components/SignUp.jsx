@@ -16,12 +16,14 @@ export default class SignUp extends React.Component {
 
   signUp() {
     console.log('this.state', this.state);
-    const { email, password } = this.state;
+    const { email, password, userName } = this.state;
     firebaseApp.auth().createUserWithEmailAndPassword(email, password)
       .then( (user) => {
         let currUser = firebaseApp.auth().currentUser;
         usersRef.child( currUser.uid ).set({
-          email
+          email,
+          userName,
+          'online': true
         });
       })
       .catch(error => {
@@ -34,6 +36,12 @@ export default class SignUp extends React.Component {
       <div className="form-inline" style={{margin:'5%'}}>
         <h2>Sing Up</h2>
         <div className="form-group">
+          <input type="text"
+            style={{marginRight: '5px', marginBottom: '10px'}}
+            className="form-control"
+            placeholder="User Name"
+            onChange= {event => this.setState({userName: event.target.value}) }
+          />
           <input type="text"
             style={{marginRight: '5px', marginBottom: '10px'}}
             className="form-control"

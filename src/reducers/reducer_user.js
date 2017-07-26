@@ -8,9 +8,10 @@ let user = {
 export default (state = user, action) => {
   switch (action.type) {
     case SIGNED_IN:
-      const { email, uid } = action;
+      const { email, userName, uid } = action;
       user = {
         email,
+        userName,
         uid
       }
       return user;

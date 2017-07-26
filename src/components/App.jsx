@@ -11,9 +11,11 @@ class App extends React.Component {
   }
 
  signOut() {
-   usersRef.child( this.props.user.uid ).update({
-     online: false
-   });
+   if (this.props.user.uid) {
+     usersRef.child( this.props.user.uid ).update({
+       online: false
+     });
+   }
    firebaseApp.auth().signOut();
  }
 
@@ -21,7 +23,10 @@ class App extends React.Component {
     return (
       <div style={{margin: '10%'}}>
         <div className="">
-          <h3>Team Goals</h3>
+          <div className="header">
+            <h3>Team Goals</h3>
+            <p>Welcome {this.props.user.userName}</p>
+          </div>
           <AddGoal />
           <hr />
           <h4>Goals:</h4>

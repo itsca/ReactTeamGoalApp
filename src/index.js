@@ -19,8 +19,10 @@ firebaseApp.auth().onAuthStateChanged(user => {
     console.log('user has signed in or up', user);
     const { uid } = user;
     usersRef.child( uid ).once('value').then( (snapshot) => {
-      let email = snapshot.val().email;
-      store.dispatch(logUser(email, uid));
+      if (snapshot.val()) {
+        let {email, userName} = snapshot.val();
+        store.dispatch(logUser(email, userName, uid));
+      }
     });
     browserHistory.push('/app');
   } else {
