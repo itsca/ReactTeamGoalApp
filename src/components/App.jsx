@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { firebaseApp } from '../firebase.js';
+import { firebaseApp, usersRef } from '../firebase.js';
 import AddGoal from './AddGoal.jsx';
 import GoalList from './GoalList.jsx';
 import CompleteGoalList from './CompleteGoalList.jsx';
@@ -11,6 +11,9 @@ class App extends React.Component {
   }
 
  signOut() {
+   usersRef.child( this.props.user.uid ).update({
+     online: false
+   });
    firebaseApp.auth().signOut();
  }
 
@@ -36,8 +39,11 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log('state', state);
-  return {}
+  console.log('AppState', state);
+  const { user } = state;
+  return {
+    user
+  }
 }
 
 export default connect(mapStateToProps, null)(App);

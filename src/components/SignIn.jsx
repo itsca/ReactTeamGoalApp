@@ -15,14 +15,14 @@ export default class SignIn extends React.Component {
   }
 
   signIn() {
-    console.log('this.state', this.state);
+    //console.log('this.state', this.state);
     const { email, password } = this.state;
     firebaseApp.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-          // let currUser = firebaseApp.auth().currentUser;
-          // usersRef.child( currUser.uid ).set({
-          //   email
-          // });
+          let currUser = firebaseApp.auth().currentUser;
+          usersRef.child( currUser.uid ).update({
+            online: true
+          });
       })
       .catch(error => {
         this.setState({error})
