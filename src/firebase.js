@@ -10,5 +10,7 @@ const config = {
   };
 
 export const firebaseApp = firebase.initializeApp(config);
+export const  usersRef = firebase.database().ref('appUsers');
+export const  teamsRef = firebase.database().ref('teams');
 export const  goalRef = firebase.database().ref('goals');
 export const  completeGoalRef = firebase.database().ref('completeGoals');

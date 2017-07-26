@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 //For V4 improvement
 // import { BrowserRouter } from 'react-router-dom';
 import { Router, Route, browserHistory } from 'react-router';
+import * as firebase from 'firebase';
 import { firebaseApp } from './firebase';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -16,8 +17,8 @@ const store = createStore(reducer);
 
 firebaseApp.auth().onAuthStateChanged(user => {
   if (user) {
-    // console.log('user has signed in or up', user);
-    const { email } = user;
+    console.log('user has signed in or up', user);
+    const { email, uid,  } = user;
     store.dispatch(logUser(email));
     browserHistory.push('/app');
   } else {

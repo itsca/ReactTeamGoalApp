@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {firebaseApp} from '../firebase';
+import {firebaseApp, usersRef} from '../firebase';
 
 export default class SignIn extends React.Component {
   constructor(props) {
@@ -18,6 +18,12 @@ export default class SignIn extends React.Component {
     console.log('this.state', this.state);
     const { email, password } = this.state;
     firebaseApp.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+          // let currUser = firebaseApp.auth().currentUser;
+          // usersRef.child( currUser.uid ).set({
+          //   email
+          // });
+      })
       .catch(error => {
         this.setState({error})
       })
