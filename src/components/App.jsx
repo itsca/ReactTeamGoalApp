@@ -4,6 +4,7 @@ import { firebaseApp, usersRef } from '../firebase.js';
 import AddGoal from './AddGoal.jsx';
 import GoalList from './GoalList.jsx';
 import CompleteGoalList from './CompleteGoalList.jsx';
+import Teams from './teams/Teams.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,21 +24,27 @@ class App extends React.Component {
     return (
       <div style={{margin: '10%'}}>
         <div className="">
-          <div className="header">
+          <div className="header" style={{marginBottom: '3em'}}>
             <h3>Team Goals</h3>
-            <p>Welcome {this.props.user.userName}</p>
+            <p style={{display: 'inline-block', marginRight: '5%'}}>
+              Welcome {this.props.user.userName}
+            </p>
+            <button className="btn btn-danger"
+                    style={{display: 'inline-block'}}
+              onClick={() => this.signOut()}>Sign Out
+            </button>
+            <hr />
           </div>
-          <AddGoal />
+          <Teams />
+          {/* <AddGoal />
           <hr />
           <h4>Goals:</h4>
           <GoalList />
           <hr />
           <h4>Complete Goals</h4>
-          <CompleteGoalList />
+          <CompleteGoalList /> */}
         </div>
         <br/>
-        <button className="btn btn-danger"
-          onClick={() => this.signOut()}>Sign Out</button>
       </div>
     );
   }
