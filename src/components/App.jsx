@@ -35,7 +35,7 @@ class App extends React.Component {
             </button>
             <hr />
           </div>
-          <Teams />
+          <Teams uid={this.props.user.uid}/>
           {/* <AddGoal />
           <hr />
           <h4>Goals:</h4>
@@ -51,7 +51,7 @@ class App extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log('AppState', state);
+  //console.log('AppState', state);
   const { user } = state;
   return {
     user
