@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { completeGoalRef } from '../../firebase.js';
+import { completeGoalRef, teamsRef } from '../../firebase.js';
 import { setCompleted } from '../../actions/index.js';
 
 class CompleteGoalList extends React.Component {
@@ -9,7 +9,7 @@ class CompleteGoalList extends React.Component {
   // }
 
   componentDidMount() {
-  completeGoalRef.on('value', snap => {
+  teamsRef.child(this.props.tid).child('completedGoals').on('value', snap => {
       let completeGoals = [];
       snap.forEach(completeGoal => {
         const { email, title } = completeGoal.val();
@@ -20,7 +20,7 @@ class CompleteGoalList extends React.Component {
   }
 
   clearCompleted() {
-    completeGoalRef.set([]);
+    teamsRef.child(this.props.tid).child('completedGoals').set([]);
   }
 
   render() {
