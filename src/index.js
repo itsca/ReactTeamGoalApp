@@ -21,21 +21,21 @@ firebaseApp.auth().onAuthStateChanged(user => {
     usersRef.child( uid ).once('value').then( (snapshot) => {
       if (snapshot.val()) {
         //console.log('SNAPVAL', snapshot.val());
-        let {email, userName, teams} = snapshot.val();
+        let {email, userName} = snapshot.val();
         //console.log('TEAMSVAL', teams);
-        ///////////
-        let userTeams = [];
-        const obj = teams;
-        const userTeamRefsArray = Object.keys(obj).map(function (key) { return obj[key];});
-        userTeamRefsArray.forEach((val, index) => {
-          /////////////
-          teamsRef.child( val.teamId ).on('value', snap => {
-              userTeams.push(snap.val());
-            })
-            ///////////////
-        });
-        ///////////////////
-        store.dispatch(logUser(email, userName, uid, userTeams));
+        // ///////////
+        // let userTeams = [];
+        // const obj = teams;
+        // const userTeamRefsArray = Object.keys(obj).map(function (key) { return obj[key];});
+        // userTeamRefsArray.forEach((val, index) => {
+        //   /////////////
+        //   teamsRef.child( val.teamId ).on('value', snap => {
+        //       userTeams.push(snap.val());
+        //     })
+        //     ///////////////
+        // });
+        // ///////////////////
+        store.dispatch(logUser(email, userName, uid));
       }
     });
     browserHistory.push('/app');
