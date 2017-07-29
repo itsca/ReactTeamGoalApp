@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { firebaseApp, usersRef } from '../firebase.js';
-import AddGoal from './AddGoal.jsx';
-import GoalList from './GoalList.jsx';
-import CompleteGoalList from './CompleteGoalList.jsx';
 import Teams from './teams/Teams.jsx';
+import Team from './teams/Team.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -30,12 +28,12 @@ class App extends React.Component {
               Welcome {this.props.user.userName}
             </p>
             <button className="btn btn-danger"
-                    style={{display: 'inline-block'}}
+                    style={{display: 'inline-block', float: 'right'}}
               onClick={() => this.signOut()}>Sign Out
             </button>
-            <hr />
           </div>
-          <Teams uid={this.props.user.uid}/>
+          {this.props.children}
+          {/* <Teams /> */}
           {/* <AddGoal />
           <hr />
           <h4>Goals:</h4>

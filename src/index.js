@@ -2,13 +2,15 @@ import React from 'react';
 import ReactDom from 'react-dom';
 //For V4 improvement
 // import { BrowserRouter } from 'react-router-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute,  browserHistory } from 'react-router';
 import { firebaseApp, usersRef, teamsRef} from './firebase';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducers/index.js';
 import { logUser } from './actions/index.js';
 import App from './components/App.jsx';
+import Teams from './components/teams/Teams.jsx';
+import Team from './components/teams/Team.jsx';
 import SignIn from './components/SignIn.jsx';
 import SignUp from './components/SignUp.jsx';
 
@@ -20,21 +22,7 @@ firebaseApp.auth().onAuthStateChanged(user => {
     const { uid } = user;
     usersRef.child( uid ).once('value').then( (snapshot) => {
       if (snapshot.val()) {
-        //console.log('SNAPVAL', snapshot.val());
         let {email, userName} = snapshot.val();
-        //console.log('TEAMSVAL', teams);
-        // ///////////
-        // let userTeams = [];
-        // const obj = teams;
-        // const userTeamRefsArray = Object.keys(obj).map(function (key) { return obj[key];});
-        // userTeamRefsArray.forEach((val, index) => {
-        //   /////////////
-        //   teamsRef.child( val.teamId ).on('value', snap => {
-        //       userTeams.push(snap.val());
-        //     })
-        //     ///////////////
-        // });
-        // ///////////////////
         store.dispatch(logUser(email, userName, uid));
       }
     });
@@ -51,7 +39,10 @@ firebaseApp.auth().onAuthStateChanged(user => {
 ReactDom.render(
   <Provider store={store}>
     <Router path="/" history={browserHistory}>
-    <Route path="/app" component={App} />
+    <Route path="/app" component={App}>
+      <IndexRoute component={Teams}/>
+      <Route path="team/:id" component={Team}/>
+    </Route>
     <Route path="/signin" component={SignIn} />
     <Route path="/signup" component={SignUp} />
     </Router>

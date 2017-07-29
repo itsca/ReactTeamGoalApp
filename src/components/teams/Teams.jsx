@@ -11,34 +11,10 @@ class Teams extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log('TEAMS', this.props);
-    // userRef.child(auth.uid).child('groups').on('value', this.buildGroupList);
-    // userRef.child(auth.uid).child('groups').on('child_removed', this.buildGroupList);
-    // userRef.child(auth.uid).child('groups').on('child_added', this.buildGroupList);
-  }
-
-// componentDidUpdate() {
-//   usersRef.child( this.props.uid ).child('teams').on('value', snap => {
-//     let teams = [];
-//     snap.forEach(team => {
-//       const { teamId } = team.val();
-//       //const serverKey = goal.key;
-//       teamsRef.child(teamId).on('value', snap => {
-//         const { name } = snap.val();
-//         teams.push({name});
-//       });
-//     })
-//     this.props.setTeams(teams);
-//   })
-// }
-
   render() {
     return (
       <div>
-        {console.log('Props in teams', this.props)}
-        <h4>Teams Component</h4>
-        <AddTeam />
+        <AddTeam  />
         <TeamList />
       </div>
     );
@@ -46,7 +22,6 @@ class Teams extends React.Component {
 }
 
 function mapStateToProps(state) {
-  //console.log('AppState', state);
   const { user } = state;
   return {
     user

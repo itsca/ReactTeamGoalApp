@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {completeGoalRef, goalRef} from '../firebase.js';
+import {completeGoalRef, goalRef} from '../../firebase.js';
 
 class GoalItem extends React.Component {
   // constructor(props) {
