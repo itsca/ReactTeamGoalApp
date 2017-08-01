@@ -26,16 +26,20 @@ class AddMember extends React.Component {
     }
   }
 
+  modalHandler() {
+    this.setState({ showModal: !this.state.showModal, userSearchResult: []});
+  }
+
   render() {
     return (
       <div>
         <button
           className="btn btn-success"
           style={{marginBottom: '1em'}}
-          onClick={()=> this.setState({ showModal: !this.state.showModal })}>
+          onClick={()=> this.modalHandler()}>
           + Add a Member
         </button>
-        <Modal show={this.state.showModal} onHide={()=> this.setState({ showModal: !this.state.showModal })}>
+        <Modal show={this.state.showModal} onHide={()=> this.modalHandler()}>
             <Modal.Header closeButton>
               <Modal.Title>Add a member.</Modal.Title>
             </Modal.Header>
@@ -69,7 +73,7 @@ class AddMember extends React.Component {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button onClick={()=> this.setState({ showModal: !this.state.showModal })}>Close</Button>
+              <Button onClick={()=> this.modalHandler()}>Close</Button>
             </Modal.Footer>
           </Modal>
       </div>
