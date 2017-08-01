@@ -3,6 +3,8 @@ import { firebaseApp, usersRef, teamsRef} from '../../firebase';
 import AddGoal from '../goals/AddGoal.jsx';
 import GoalList from '../goals/GoalList.jsx';
 import CompleteGoalList from '../goals/CompleteGoalList.jsx';
+import TeamMembers from '../members/members.jsx';
+import MemberList from '../members/memberList.jsx';
 
 export default class Team extends React.Component {
   constructor(props) {
@@ -15,7 +17,6 @@ export default class Team extends React.Component {
   componentDidMount() {
     teamsRef.child(this.props.params.id).on('value', (snap) => {
       this.setState({'currentTeam' : snap.val()});
-      console.log('TC', this.state.currentTeam.name);
     });
   }
 
@@ -33,7 +34,7 @@ export default class Team extends React.Component {
           <CompleteGoalList tid={this.props.params.id}/>
         </div>
         <div className="col-xs-4" style={{float: 'left'}}>
-          <h5>Team Users</h5>
+          <MemberList tid={ this.props.params.id }/>
         </div>
       </div>
     );

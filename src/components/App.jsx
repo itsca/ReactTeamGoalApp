@@ -33,14 +33,6 @@ class App extends React.Component {
             </button>
           </div>
           {this.props.children}
-          {/* <Teams /> */}
-          {/* <AddGoal />
-          <hr />
-          <h4>Goals:</h4>
-          <GoalList />
-          <hr />
-          <h4>Complete Goals</h4>
-          <CompleteGoalList /> */}
         </div>
         <br/>
       </div>

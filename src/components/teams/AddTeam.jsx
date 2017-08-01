@@ -22,6 +22,9 @@ class AddTeam extends React.Component {
       usersRef.child( uid ).child( 'teams' ).push({
         teamId: snap.key
       });
+      teamsRef.child(snap.key).child( 'members' ).push({
+        uid
+      })
     })
   }
 
