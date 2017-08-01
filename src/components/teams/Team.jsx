@@ -33,7 +33,7 @@ export default class Team extends React.Component {
           <h4>Complete Goals</h4>
           <CompleteGoalList tid={this.props.params.id}/>
         </div>
-        <div className="col-xs-4" style={{float: 'left'}}>
+        <div className="col-xs-4 teamMembersWrapper" style={{float: 'left'}}>
           <MemberList tid={ this.props.params.id }/>
         </div>
       </div>

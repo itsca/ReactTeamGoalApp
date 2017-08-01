@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One|Work+Sans:300,400,700,900');
+
+
+.header {
+  marginBottom: '3em';
+}
+
+.logo {
+  font-family: 'Fredoka One', cursive;
+}
+
+
+.teamMembersWrapper {
+  padding-top: 1em;
+}

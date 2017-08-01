@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firebaseApp, usersRef } from '../firebase.js';
 import Teams from './teams/Teams.jsx';
 import Team from './teams/Team.jsx';
+import '../App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,8 +23,8 @@ class App extends React.Component {
     return (
       <div style={{margin: '10%'}}>
         <div className="">
-          <div className="header" style={{marginBottom: '3em'}}>
-            <h3>Team Goals</h3>
+          <div className="header">
+            <h1 className="logo">Mebi.</h1>
             <p style={{display: 'inline-block', marginRight: '5%'}}>
               Welcome {this.props.user.userName}
             </p>
