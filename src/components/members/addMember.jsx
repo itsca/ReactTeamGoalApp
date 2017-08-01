@@ -1,5 +1,5 @@
 import React from 'react';
-import {Glyphicon, Modal, Button, FormGroup, FormControl, InputGroup} from 'react-bootstrap';
+import {Glyphicon, Modal, Button, FormGroup, FormControl, InputGroup, ListGroup, ListGroupItem, Clearfix} from 'react-bootstrap';
 import { firebaseApp, usersRef, teamsRef} from '../../firebase';
 
 
@@ -9,25 +9,59 @@ class AddMember extends React.Component {
     this.state = {
       'showModal': false,
       'userSearchResult': [],
+      'userNotFound': false,
     }
   }
 
   searchUser() {
+    this.setState({ 'userSearchResult' : [] });
+    this.setState({ 'userNotFound' : false });
     if (this.state.userSearchValue != undefined) {
       usersRef.orderByChild('email').equalTo(this.state.userSearchValue).on('value', snap => {
-        let searchResult = [];
-        let snapVal = snap.val();
-        let snapArray = Object.keys(snap.val()).map(key => snap.val()[key]);
-        searchResult.push(snapArray);
-        this.setState({ 'userSearchResult' : snapArray });
-        console.log('AMC', this.state);
-        console.log('AMC KEY', snapArray);
+        if (snap.val() != undefined && snap.val() != null) {
+          let searchResult = [];
+          let snapVal = snap.val();
+          let snapArray = Object.keys(snap.val()).map(key => snap.val()[key]);
+          searchResult.push(snapArray);
+          this.setState({ 'userSearchResult' : snapArray });
+        } else {
+          this.setState({ 'userNotFound' : true });
+        }
       })
     }
   }
 
+  userFoundHandler() {
+    if (this.state.userNotFound) {
+      return (
+          <p><strong>Sorry, no user found with that email :(</strong></p>
+      )
+    }
+    return (
+      this.state.userSearchResult.map((member, index) => {
+        const {userName} = member;
+          return (
+              <ListGroupItem>
+                <p style={{float: 'left', paddingTop: '0.5em'}}> <strong> {userName} </strong></p>
+                <Button className="btn-success"
+                  style={{float: 'right'}}
+                        onClick={() => {this.addMember()}}
+                >
+                  + Add
+                </Button>
+                <Clearfix></Clearfix>
+              </ListGroupItem>
+          )
+      })
+    )
+  }
+
+  addMember() {
+
+  }
+
   modalHandler() {
-    this.setState({ showModal: !this.state.showModal, userSearchResult: []});
+    this.setState({ showModal: !this.state.showModal, userSearchResult: [], 'userNotFound' : false});
   }
 
   render() {
@@ -60,16 +94,9 @@ class AddMember extends React.Component {
                     </InputGroup.Button>
                   </InputGroup>
                 </FormGroup>
-                {
-                  this.state.userSearchResult.map((member, index) => {
-                    console.log(member.userName)
-                    const {userName} = member;
-                      return (
-                        <div key={index}>{userName}</div>
-                      )
-                    }
-                  )
-                }
+                <ListGroup>
+                  {this.userFoundHandler()}
+                </ListGroup>
               </div>
             </Modal.Body>
             <Modal.Footer>
