@@ -44,7 +44,7 @@ class MemberList extends React.Component {
   checkForAdd() {
     if (this.state.admin === true) {
       return (
-        <AddMember/>
+        <AddMember tid={this.props.tid}/>
       );
     }
   }

@@ -15,7 +15,6 @@ export default (state = user, action) => {
         uid
       }
       return user;
-      break;
     default:
       return state;
   }

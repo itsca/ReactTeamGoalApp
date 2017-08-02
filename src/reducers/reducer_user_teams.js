@@ -6,7 +6,6 @@ export default (state = [], action) => {
     case SET_USER_TEAMS:
         const { teams } = action;
         return teams;
-      break;
     default:
       return state;
   }

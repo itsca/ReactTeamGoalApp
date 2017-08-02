@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Collapse} from 'react-bootstrap';
-import { firebaseApp, teamsRef, usersRef } from '../../firebase.js';
+import { teamsRef, usersRef } from '../../firebase.js';
 
 class AddTeam extends React.Component {
   constructor(props) {

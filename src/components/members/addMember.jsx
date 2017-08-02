@@ -10,7 +10,12 @@ class AddMember extends React.Component {
       'showModal': false,
       'userSearchResult': [],
       'userNotFound': false,
+      'alreadyAMember': false,
     }
+  }
+
+  modalHandler() {
+    this.setState({ showModal: !this.state.showModal, userSearchResult: [], 'userNotFound' : false});
   }
 
   searchUser() {
@@ -23,11 +28,31 @@ class AddMember extends React.Component {
           let snapVal = snap.val();
           let snapArray = Object.keys(snap.val()).map(key => snap.val()[key]);
           searchResult.push(snapArray);
+          ////
+          if (snapArray[0]) {
+            this.checkIfMember(snapArray[0].teams);
+          }
+          ////
           this.setState({ 'userSearchResult' : snapArray });
         } else {
           this.setState({ 'userNotFound' : true });
         }
       })
+    }
+  }
+
+  addMember() {
+
+  }
+
+  checkIfMember(teams) {
+    if (teams != undefined && teams != null) {
+      let teamsArray = Object.keys(teams).map(key => teams[key]);
+      teamsArray.forEach(function(val,index){
+         if (val.teamId === this.props.tid) {
+           this.setState({ 'alreadyAMember' : true });
+         }
+      }, this)  
     }
   }
 
@@ -41,11 +66,12 @@ class AddMember extends React.Component {
       this.state.userSearchResult.map((member, index) => {
         const {userName} = member;
           return (
-              <ListGroupItem>
+              <ListGroupItem key={index}>
                 <p style={{float: 'left', paddingTop: '0.5em'}}> <strong> {userName} </strong></p>
                 <Button className="btn-success"
-                  style={{float: 'right'}}
+                        style={{float: 'right'}}
                         onClick={() => {this.addMember()}}
+                        disabled={this.state.alreadyAMember}
                 >
                   + Add
                 </Button>
@@ -54,14 +80,6 @@ class AddMember extends React.Component {
           )
       })
     )
-  }
-
-  addMember() {
-
-  }
-
-  modalHandler() {
-    this.setState({ showModal: !this.state.showModal, userSearchResult: [], 'userNotFound' : false});
   }
 
   render() {
