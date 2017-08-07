@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { firebaseApp, usersRef, teamsRef} from '../../firebase';
 import AddGoal from '../goals/AddGoal.jsx';
 import GoalList from '../goals/GoalList.jsx';
@@ -6,10 +7,11 @@ import CompleteGoalList from '../goals/CompleteGoalList.jsx';
 import TeamMembers from '../members/members.jsx';
 import MemberList from '../members/memberList.jsx';
 
-export default class Team extends React.Component {
+class Team extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      admin: false,
       currentTeam: [],
     }
   }
@@ -18,6 +20,13 @@ export default class Team extends React.Component {
     teamsRef.child(this.props.params.id).on('value', (snap) => {
       this.setState({'currentTeam' : snap.val()});
     });
+    teamsRef.child(this.props.params.id).child('admin').on('value', snap => {
+      if (this.props.state.user != undefined) {
+        if (this.props.state.user.uid === snap.val()) {
+          this.setState({admin : true});
+        }
+      }
+    })
   }
 
   render() {
@@ -34,9 +43,18 @@ export default class Team extends React.Component {
           <CompleteGoalList tid={this.props.params.id}/>
         </div>
         <div className="col-xs-4 teamMembersWrapper" style={{float: 'left'}}>
-          <MemberList tid={ this.props.params.id }/>
+          <MemberList tid={ this.props.params.id } admin={this.state.admin}/>
         </div>
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  //console.log('MLC', state);
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps, null)(Team);

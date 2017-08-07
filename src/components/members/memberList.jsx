@@ -8,7 +8,6 @@ class MemberList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      admin: false,
       teamMembers: [],
     }
   }
@@ -26,40 +25,27 @@ class MemberList extends React.Component {
                 admin = true;
               }
             }
+            ////
             members.push({memberUid, userName, online, admin});
             ////
             if (members.length > 0) {
               for (var i = 0; i < members.length; i++) {
                 if (members[i + 1] != undefined) {
                   if (members[i].memberUid === members[i + 1].memberUid) {
-                    console.log(members);
-                    console.log('Same User');
                     members.splice(i, 1);
-                    console.log(members);
                   }
                 }
               }
             }
-            ////
-            //this.setState({teamMembers : []});
-            //console.log('MLC', this.state.teamMembers);
             this.setState({teamMembers : members});
-            //console.log('MLC', this.state.teamMembers);
           })
         }
       })
     })
-    teamsRef.child(this.props.tid).child('admin').on('value', snap => {
-      if (this.props.user != undefined) {
-        if (this.props.user.uid === snap.val()) {
-          this.setState({admin : true});
-        }
-      }
-    })
   }
 
   checkForAdd() {
-    if (this.state.admin === true) {
+    if (this.props.admin === true) {
       return (
         <AddMember tid={this.props.tid}/>
       );
