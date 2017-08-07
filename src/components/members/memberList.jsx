@@ -27,7 +27,24 @@ class MemberList extends React.Component {
               }
             }
             members.push({memberUid, userName, online, admin});
+            ////
+            if (members.length > 0) {
+              for (var i = 0; i < members.length; i++) {
+                if (members[i + 1] != undefined) {
+                  if (members[i].memberUid === members[i + 1].memberUid) {
+                    console.log(members);
+                    console.log('Same User');
+                    members.splice(i, 1);
+                    console.log(members);
+                  }
+                }
+              }
+            }
+            ////
+            //this.setState({teamMembers : []});
+            //console.log('MLC', this.state.teamMembers);
             this.setState({teamMembers : members});
+            //console.log('MLC', this.state.teamMembers);
           })
         }
       })

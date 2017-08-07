@@ -26,7 +26,7 @@ class TeamList extends React.Component {
             this.forceUpdate();
           });
         })
-        console.log(teams);
+        //console.log(teams);
         this.setState({userTeams: teams});
         this.props.setTeams(teams);
       })

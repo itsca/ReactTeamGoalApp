@@ -15,24 +15,24 @@ class AddMember extends React.Component {
   }
 
   modalHandler() {
-    this.setState({ showModal: !this.state.showModal, userSearchResult: [], 'userNotFound' : false});
+    this.setState({ showModal: !this.state.showModal, userSearchResult: [], 'userNotFound' : false, 'alreadyAMember' : false});
   }
 
   searchUser() {
     this.setState({ 'userSearchResult' : [] });
     this.setState({ 'userNotFound' : false });
+    this.setState({ 'alreadyAMember' : false });
     if (this.state.userSearchValue != undefined) {
       usersRef.orderByChild('email').equalTo(this.state.userSearchValue).on('value', snap => {
         if (snap.val() != undefined && snap.val() != null) {
           let searchResult = [];
-          let snapVal = snap.val();
-          let snapArray = Object.keys(snap.val()).map(key => snap.val()[key]);
+          const snapVal = snap.val();
+          const snapArray = Object.keys(snap.val()).map(key => snap.val()[key]);
+          snapArray[0].uid = Object.keys(snapVal)[0];
           searchResult.push(snapArray);
-          ////
           if (snapArray[0]) {
             this.checkIfMember(snapArray[0].teams);
           }
-          ////
           this.setState({ 'userSearchResult' : snapArray });
         } else {
           this.setState({ 'userNotFound' : true });
@@ -41,8 +41,15 @@ class AddMember extends React.Component {
     }
   }
 
-  addMember() {
-
+  addMember(memberUid) {
+    teamsRef.child(this.props.tid).child('members').push({
+      uid : memberUid
+    })
+    .then(() => {
+      usersRef.child( memberUid ).child( 'teams' ).push({
+        teamId: this.props.tid
+      });
+    })
   }
 
   checkIfMember(teams) {
@@ -52,7 +59,7 @@ class AddMember extends React.Component {
          if (val.teamId === this.props.tid) {
            this.setState({ 'alreadyAMember' : true });
          }
-      }, this)  
+      }, this)
     }
   }
 
@@ -64,13 +71,14 @@ class AddMember extends React.Component {
     }
     return (
       this.state.userSearchResult.map((member, index) => {
-        const {userName} = member;
+        const {userName, uid} = member;
+        console.log(member)
           return (
               <ListGroupItem key={index}>
                 <p style={{float: 'left', paddingTop: '0.5em'}}> <strong> {userName} </strong></p>
                 <Button className="btn-success"
                         style={{float: 'right'}}
-                        onClick={() => {this.addMember()}}
+                        onClick={() => {this.addMember(uid)}}
                         disabled={this.state.alreadyAMember}
                 >
                   + Add
